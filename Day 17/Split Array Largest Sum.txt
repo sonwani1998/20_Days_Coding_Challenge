@@ -1,0 +1,35 @@
+class Solution {
+    public int splitArray(int[] nums, int m) {
+        int left = Integer.MIN_VALUE;int right = 0;int mid;
+        
+        for(int i : nums){
+            left = Math.max(left,i);
+            right += i;
+        }
+        
+        while(left<right){
+            mid = left + (right - left)/2;
+            if(canSplit(mid,nums,m))
+                right = mid;
+            else
+                left = mid + 1;
+        }
+        return left;
+    }
+    
+    boolean canSplit(int mid ,int[] nums,int m){
+        int count = 1;int total = 0;
+        for(int n : nums){
+            total+=n;
+            
+            if(total > mid){
+                total = n;
+                count++;
+            if(count > m){
+                return false;
+            }
+          }
+        }
+        return true;
+    }
+}

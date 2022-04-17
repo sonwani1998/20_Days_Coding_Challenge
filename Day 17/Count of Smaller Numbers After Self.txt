@@ -1,0 +1,58 @@
+class Solution {
+    int[] nums;
+    List<Integer> answer;
+    public List<Integer> countSmaller(int[] nums) {
+        int n = nums.length;
+        answer = new ArrayList<>();
+        this.nums = nums;        
+        int[] index = new int[n];
+        for(int i = 0; i < n; i++) {
+            index[i] = i;
+            answer.add(0);
+        }
+        mergesort(index, 0, index.length);
+        return answer;
+    }
+    void mergesort(int[] arr, int start, int end) {
+        if(start + 1 >= end) {
+            return;
+        }
+        int n = arr.length;
+        int mid = start + (end - start) / 2;
+        mergesort(arr, start, mid);
+        mergesort(arr, mid, end);
+        merge(arr, start, mid, end);
+    }
+    
+    void merge(int[] arr, int start, int mid, int end) {        
+        int n = end - start;
+        int[] tmp = new int[n];
+        int index = 0;
+        int less = 0;
+        int i = start, j = mid;
+        while(i < mid && j < end) {
+            if(nums[arr[i]] <= nums[arr[j]]) {
+                tmp[index] = arr[i];
+                answer.set(arr[i], answer.get(arr[i]) + less);
+                i++;
+            } else {
+                tmp[index] = arr[j];
+                less++;
+                j++;
+            }
+            index++;
+        }
+        while(i < mid) {
+            tmp[index] = arr[i];
+            answer.set(arr[i], answer.get(arr[i]) + less);
+            i++;
+            index++;
+        }
+        while(j < end) {
+            tmp[index] = arr[j];
+            j++;
+            index++;
+        }
+        System.arraycopy(tmp, 0, arr, start, n);
+    }
+}
