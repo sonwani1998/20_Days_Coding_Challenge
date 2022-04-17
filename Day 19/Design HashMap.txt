@@ -1,0 +1,20 @@
+class MyHashMap {
+    int[] v = new int[1000001];
+
+    public MyHashMap() {
+        for(int i = 0;i < 1000001;++i)
+            v[i] = -1;
+    }
+    
+    public void put(int key, int value) {
+        v[key] = value;
+    }
+    
+    public int get(int key) {
+        return v[key];
+    }
+    
+    public void remove(int key) {
+        v[key] = -1;
+    }
+}
